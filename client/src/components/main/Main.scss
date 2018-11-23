@@ -1,0 +1,8 @@
+.main-container {
+  min-height: -webkit-fill-available;
+  min-height: 100%;
+  min-height: -moz-available;          /* WebKit-based browsers will ignore this. */
+  min-height: -webkit-fill-available;  /* Mozilla-based browsers will ignore this. */
+  min-height: stretch;
+  min-height: 100vh;
+}
