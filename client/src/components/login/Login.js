@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Login.scss';
 import { Col, Row, Button, Form, FormGroup, Label, Input, Card, CardBody } from 'reactstrap';
+import Axios from 'axios';
+import { ApiUrl } from '../../config/ApiUrl';
 
 class Login extends Component {
   constructor(props) {
@@ -26,40 +28,42 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = {
+    let self = this;
+
+    const credentials = {
       email: this.state.email,
       password: this.state.password,
     };
 
-    fetch('/api/v1/auth/sign_in', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(res => {
-        console.log(res)
-    }).catch(err => err);
+    Axios.post('/api/v1/auth/sign_in', {}, {headers: Object.assign(ApiUrl.headers, credentials)})
+    .then(function (response) {
+      console.log(response);
+      self.validateToken(response);
+    })
+    .catch(function (error) {
+      console.log("Login error: ", error);
+    });
   }
 
-  newSession(email, password) {
-  // // save this in variable to dont forget
-  //   var self = this;
-  //   var credentials = {'email': email, 'password': password}
-  //
-  //
-  //   // Post the request
-  //   Axios.post(Url.login, {}, {headers: Object.assign(Url.headers, credentials)})
-  //   .then(function (response) { // ON SUCCESS
-  //     // Valid token received in the headers response
-  //     console.log(response);
-  //     self.validateToken(response);
-  //   })
-  //   .catch(function (error) {
-  //     // Return error if credentials is invalids
-  //     console.log("ERROR DURING newSession (LoginForm.js)", error);
-  //   });
-  } // End of newSessions()
+  validateToken(response) {
+    let accessToken = {
+      "access-token": response.headers["access-token"],
+      "client": response.headers.client,
+      "uid": response.headers.uid
+    }
+
+    Axios.get('/api/v1/auth/validate_token',
+      {
+        headers: Object.assign(ApiUrl.headers, accessToken)
+      }
+    )
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log("Token validation error: ", error);
+    });
+  }
 
   render() {
     return (
