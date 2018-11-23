@@ -44,6 +44,9 @@ export default class NavBar extends React.Component {
               <NavLink exact to="/" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
                 Home
               </NavLink>
+              <NavLink exact to="/login" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
+                Login
+              </NavLink>
             </Nav>
           </Collapse>
         </Navbar>
