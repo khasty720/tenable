@@ -20,6 +20,9 @@ const config = {
     password: 'password',
     password_confirmation: 'password_confirmation'
   },
+  storage: {
+    flushGetRequests: false
+  }
 }
 
 const {

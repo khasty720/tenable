@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './navbar.scss';
 import { NavLink as RouterNavLink, withRouter } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavLink } from 'reactstrap';
-import { connect } from 'react-redux'
-import { signOutUser } from '../../config/redux-token-auth-config'
+import { connect } from 'react-redux';
+import { signOutUser } from '../../config/redux-token-auth-config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class NavBar extends Component {
   constructor(props) {
@@ -15,7 +16,6 @@ class NavBar extends Component {
     this.toggle = this.toggle.bind(this);
     this.closeNavbar = this.closeNavbar.bind(this);
     this.signOut = this.signOut.bind(this);
-    this.goHome = this.goHome.bind(this);
   }
 
   toggle() {
@@ -30,10 +30,6 @@ class NavBar extends Component {
         isOpen: false
       });
     }
-  }
-
-  goHome() {
-    this.props.history.push('/');
   }
 
   signOut(e) {
@@ -52,8 +48,8 @@ class NavBar extends Component {
     return (
       <div>
         <Navbar className="custom-nav" color="secondary" dark expand="md">
-          <NavbarBrand onClick={this.goHome}>
-            <img className="branch-icon" src={('/logo.png')} alt="Logo"/>
+          <NavbarBrand href="/">
+            <FontAwesomeIcon icon={['fab', 'pied-piper']} size="2x" color="white"/>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>

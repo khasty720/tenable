@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './sign-in.scss';
 import { Col, Row, Button, Form, FormGroup, Label, Input, Card, CardBody, Alert } from 'reactstrap';
-import { connect } from 'react-redux'
-import { signInUser } from '../../config/redux-token-auth-config'
+import { connect } from 'react-redux';
+import { signInUser } from '../../config/redux-token-auth-config';
 import { withRouter } from 'react-router-dom';
 
 class SignIn extends Component {
