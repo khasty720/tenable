@@ -22,7 +22,7 @@
     "redux-devtools-extension": "^2.13.6",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "redux-token-auth": "^0.19.0"
+    "redux-token-auth": "https://github.com/kylecorbelli/redux-token-auth.git#master"
   },
   "scripts": {
     "start": "react-scripts start",
