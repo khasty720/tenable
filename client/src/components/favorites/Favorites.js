@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './Home.scss';
+import './Favorites.scss';
 import { Row, Col } from 'reactstrap';
 
-class Home extends Component {
+class Favorites extends Component {
   render() {
     return (
       <div className="mb-5">
-        <h4 className="mb-4 text-center">Home</h4>
+        <h4 className="mb-4 text-center">Favorites</h4>
         <Row>
           <Col xs="12" md="4" className="mb-5">
 
@@ -17,4 +17,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default Favorites;
