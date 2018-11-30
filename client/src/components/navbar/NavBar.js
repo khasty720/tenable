@@ -16,7 +16,6 @@ class NavBar extends Component {
     this.toggle = this.toggle.bind(this);
     this.closeNavbar = this.closeNavbar.bind(this);
     this.signOut = this.signOut.bind(this);
-    this.goHome = this.goHome.bind(this);
   }
 
   toggle() {
@@ -31,11 +30,6 @@ class NavBar extends Component {
         isOpen: false
       });
     }
-  }
-
-  goHome(e) {
-    e.preventDefault();
-    this.props.history.push('/');
   }
 
   signOut(e) {
@@ -54,7 +48,7 @@ class NavBar extends Component {
     return (
       <div>
         <Navbar className="custom-nav" color="secondary" dark expand="md">
-          <NavbarBrand href="#" onClick={this.goHome}>
+          <NavbarBrand href="/">
             <FontAwesomeIcon icon={['fab', 'pied-piper']} size="2x" color="white"/>
           </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />

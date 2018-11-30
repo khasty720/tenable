@@ -1,90 +1,124 @@
 import React, { Component } from 'react';
 import './sign-in.scss';
-import { Col, Row, Button, Form, FormGroup, Label, Input, Card, CardBody, Alert } from 'reactstrap';
+import { Col, Row, Button, Form,  FormGroup, FormFeedback, Label, Input, Card, CardBody, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
 import { signInUser } from '../../config/redux-token-auth-config';
 import { withRouter } from 'react-router-dom';
+import { Formik } from 'formik';
+import * as Yup from "yup";
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: '',
-      password: '',
-    };
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  }
-
-  handleSubmit (e) {
-    e.preventDefault()
-
-    const { signInUser } = this.props
-    const {
-      email,
-      password,
-    } = this.state
-    signInUser({ email, password })
-      .then(() =>
-        this.props.history.push('/')
-      )
-      .catch(() =>
-        this.setState(() => ({
-          error: <Alert color="danger">Sign in failed.</Alert>
-        })
-      ));
   }
 
   render() {
     return (
-      <Row className="justify-content-center">
-        <Col md="6">
-          <Card className="card-default">
-            <CardBody>
-              <h5 className="text-center">Sign In</h5>
-              <Form onSubmit={this.handleSubmit}>
-                <Row form>
-                  <Col>
-                    {this.state.error}
-                  </Col>
-                </Row>
-                <Row form>
-                  <Col>
-                    <FormGroup>
-                      <Label for="exampleEmail">Email</Label>
-                      <Input type="email" name="email" id="email" placeholder="user@example.com" value={this.state.email} onChange={this.handleInputChange}  />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row form>
-                  <Col>
-                    <FormGroup>
-                      <Label for="examplePassword">Password</Label>
-                      <Input type="password" name="password" id="password" placeholder="password" value={this.state.password} onChange={this.handleInputChange}  />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row form className="text-center">
-                  <Col>
-                    <Button className="btn-info pl-5 pr-5">Sign In</Button>
-                  </Col>
-                </Row>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        onSubmit={(values, actions) => {
+          const email = values.email;
+          const password = values.password;
+          const { signInUser } = this.props;
+
+          signInUser({ email, password }).then(
+            updatedUser => {
+              actions.setSubmitting(false);
+              this.props.history.push('/');
+            },
+            error => {
+              actions.setSubmitting(false);
+              // actions.setErrors(formatErrors(error));
+              actions.setStatus({ msg: 'Invalid username or password' });
+            }
+          );
+        }}
+        validationSchema={Yup.object().shape({
+          email: Yup.string()
+            .email("Email must be valid format")
+            .required("Email is required"),
+          password: Yup.string()
+            .required("Password is required"),
+        })}
+      >
+      { props => {
+        const {
+          values,
+          touched,
+          errors,
+          status,
+          isSubmitting,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+        } = props;
+        return (
+          <Row className="justify-content-center">
+            <Col md="6">
+              <Card className="card-default">
+                <CardBody>
+                  <h5 className="text-center">Sign In</h5>
+                  <Form onSubmit={handleSubmit}>
+                    <Row form>
+                      <Col>
+                        {status && status.msg &&
+                          <Alert color="danger">
+                            {status.msg}
+                          </Alert>
+                        }
+                      </Col>
+                    </Row>
+                    <Row form>
+                      <Col>
+                        <FormGroup>
+                          <Label for="exampleEmail">Email</Label>
+                          <Input
+                            id="email"
+                            placeholder="Enter your email"
+                            type="text"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            invalid={errors.email && touched.email }
+                          />
+                          {errors.email && touched.email && (
+                            <FormFeedback>{errors.email}</FormFeedback>
+                          )}
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row form>
+                      <Col>
+                        <FormGroup>
+                          <Label for="examplePassword">Password</Label>
+                          <Input
+                            id="password"
+                            placeholder="password"
+                            type="password"
+                            value={values.password}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            invalid={errors.password && touched.password }
+                          />
+                          {errors.password && touched.password && (
+                            <FormFeedback>{errors.password}</FormFeedback>
+                          )}
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row form className="text-center">
+                      <Col>
+                        <Button type="submit" className="btn-info pl-5 pr-5" disabled={isSubmitting}>Sign In</Button>
+                      </Col>
+                    </Row>
+                  </Form>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        );
+      }}
+      </Formik>
     );
   }
 }
