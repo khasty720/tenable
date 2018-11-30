@@ -6,5 +6,6 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   validates :nickname, :email, uniqueness: true
+  validates :nickname, length: { in: 6..20 }
 
 end

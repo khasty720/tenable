@@ -8,9 +8,6 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 
 class SignIn extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (
@@ -22,7 +19,7 @@ class SignIn extends Component {
           const { signInUser } = this.props;
 
           signInUser({ email, password }).then(
-            updatedUser => {
+            success => {
               actions.setSubmitting(false);
               this.props.history.push('/');
             },
@@ -35,10 +32,10 @@ class SignIn extends Component {
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
-            .email("Email must be valid format")
-            .required("Email is required"),
+            .email("email format invalid")
+            .required("email is required"),
           password: Yup.string()
-            .required("Password is required"),
+            .required("password is required"),
         })}
       >
       { props => {
