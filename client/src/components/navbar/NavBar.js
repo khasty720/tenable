@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './navbar.scss';
+import './Navbar.scss';
 import { NavLink as RouterNavLink, withRouter } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavLink } from 'reactstrap';
 import { connect } from 'react-redux';

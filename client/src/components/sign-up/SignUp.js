@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './sign-up.scss';
+import './SignUp.scss';
 import { Col, Row, Button, Form, FormGroup, FormFeedback, Label, Input, Card, CardBody, Alert } from 'reactstrap';
 import { connect } from 'react-redux'
 import { registerUser } from '../../config/redux-token-auth-config'

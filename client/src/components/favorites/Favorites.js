@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './favorites.scss';
+import './Favorites.scss';
 import { Row, Col } from 'reactstrap';
 
 class Favorites extends Component {

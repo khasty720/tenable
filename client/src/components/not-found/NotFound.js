@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './not-found.scss';
+import './NotFound.scss';
 import { Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom'
 

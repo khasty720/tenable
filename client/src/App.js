@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import NavBar from './components/navbar/navbar';
-import Footer from './components/footer/footer';
-import Main from './components/main/main';
+import NavBar from './components/navbar/Navbar';
+import Footer from './components/footer/Footer';
+import Main from './components/main/Main';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './home.scss';
+import './Home.scss';
 import { Row, Col } from 'reactstrap';
 
 class Home extends Component {

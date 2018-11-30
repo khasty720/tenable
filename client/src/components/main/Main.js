@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './main.scss';
+import './Main.scss';
 import { Switch, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import Home from '../home/home';
-import Favorites from '../favorites/favorites';
-import SignIn from '../sign-in/sign-in';
-import SignUp from '../sign-up/sign-up';
-import NotFound from '../not-found/not-found';
+import Home from '../home/Home';
+import Favorites from '../favorites/Favorites';
+import SignIn from '../sign-in/SignIn';
+import SignUp from '../sign-up/SignUp';
+import NotFound from '../not-found/NotFound';
 import { generateRequireSignInWrapper } from 'redux-token-auth'
 
 const requireSignIn = generateRequireSignInWrapper({
