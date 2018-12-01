@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './NotFound.scss';
-import { Row, Col, Button } from 'reactstrap';
-import { Link } from 'react-router-dom'
+import { Row, Col } from 'reactstrap';
 
 class NotFound extends Component {
   render() {
@@ -9,7 +8,7 @@ class NotFound extends Component {
       <Row>
         <Col className="text-center">
           <h1>404: Not found</h1>
-          <Button color="info" tag={Link} to="/" >Back to home</Button>
+          <a className="btn btn-info" href="/">Back to home</a>
         </Col>
       </Row>
     );
