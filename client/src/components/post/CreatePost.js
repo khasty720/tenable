@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Button, Form,  FormGroup, FormFeedback, Label, Input, Card, CardBody, Alert } from 'reactstrap';
-import { withRouter, Link} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import axios from 'axios';
@@ -26,13 +26,14 @@ class CreatePost extends Component {
             success => {
               actions.setSubmitting(false);
               this.props.history.push('/');
-            },
-            error => {
-              actions.setSubmitting(false);
-              // actions.setErrors(formatErrors(error));
-              // actions.setStatus({ msg: 'Error' });
             }
-          );
+          ).catch(error => {
+              actions.setSubmitting(false);
+              console.log(error.response);
+              actions.setStatus({ msg: "Failed to create post" });
+              actions.setFieldError("imageUrl", error.response.data.image_url);
+              actions.setFieldError("message", error.response.data.message);
+          });
         }}
         validationSchema={Yup.object().shape({
           message: Yup.string()
@@ -97,7 +98,7 @@ class CreatePost extends Component {
                             id="message"
                             placeholder="Limit 280 charaters"
                             type="textarea"
-                            maxlength="280"
+                            maxLength="280"
                             rows="4"
                             value={values.message}
                             onChange={handleChange}

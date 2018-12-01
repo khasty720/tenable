@@ -17,20 +17,23 @@ class SignUp extends Component {
           const email = values.email;
           const nickname = values.nickname;
           const password = values.password;
-          const passwordConfirmation = values.passwordConfirmation;
+          const password_confirmation = values.passwordConfirmation;
           const { registerUser } = this.props;
 
-          registerUser({ email, nickname, password, passwordConfirmation }).then(
+          registerUser({ email, nickname, password, password_confirmation }).then(
             success => {
               actions.setSubmitting(false);
               this.props.history.push('/');
-            },
-            error => {
+          })
+          .catch(error => {
               actions.setSubmitting(false);
-              // actions.setErrors(formatErrors(error));
-              actions.setStatus({ msg: 'Error failed to create user' });
-            }
-          );
+              console.log(error.response);
+              actions.setStatus({ msg: "Sign Up failed" });
+              actions.setFieldError("email", "email " + error.response.data.errors.email);
+              actions.setFieldError("nickname", "nickname " + error.response.data.errors.nickname);
+              actions.setFieldError("password", error.response.data.errors.password);
+              actions.setFieldError("passwordConfirmation", error.response.data.errors.password_confirmation);
+          });
         }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
