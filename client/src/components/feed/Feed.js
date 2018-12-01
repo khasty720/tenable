@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './Feed.scss';
 import axios from 'axios';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 import Post from '../post/Post';
-import Moment from 'react-moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom'
 
 class Feed extends Component {
   constructor () {
@@ -29,9 +30,23 @@ class Feed extends Component {
   render() {
     return (
       <div>
-        {this.state.posts.map(function(post){
+        <Row className="fixed-bottom">
+          <Col>
+            <Link to="/posts/new">
+              <Button className="float-right btn-floating" color="primary">
+                <FontAwesomeIcon icon='plus' color="white"/>
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+
+        <h4 className="text-center mb-4">
+          Image Feed
+        </h4>
+
+        {this.state.posts.map(function(post, id){
            return (
-             <Row className="justify-content-center">
+             <Row className="justify-content-center" key={id}>
                <Col xs="12" md="6">
                  <Post post={post}/>
                </Col>

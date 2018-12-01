@@ -5,10 +5,6 @@ import { Card, CardBody, CardText, CardImg, Button } from 'reactstrap';
 import Moment from 'react-moment';
 
 class Post extends Component {
-  constructor () {
-    super()
-  }
-
   render() {
     return (
       <Card className="card-default mb-4">
@@ -20,9 +16,9 @@ class Post extends Component {
             </small>
           </CardText>
           <CardText>
-            <p>
-              {this.props.post.message}
-            </p>
+            {this.props.post.message}
+          </CardText>
+          <CardText>
             <Button className="float-right" outline color="primary" size="sm">
               Like
             </Button>
@@ -42,8 +38,8 @@ Post.propTypes = {
     message: PropTypes.string.isRequired,
     image_url: PropTypes.string.isRequired,
     user_id: PropTypes.number.isRequired,
-    created_at: PropTypes.instanceOf(Date).isRequired,
-    updated_at: PropTypes.instanceOf(Date).isRequired,
+    created_at: PropTypes.string.isRequired,
+    updated_at: PropTypes.string.isRequired,
   })
 };
 export default Post;

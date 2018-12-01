@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import Home from '../home/Home';
 import Favorites from '../favorites/Favorites';
+import CreatePost from '../post/CreatePost';
 import SignIn from '../sign-in/SignIn';
 import SignUp from '../sign-up/SignUp';
 import NotFound from '../not-found/NotFound';
@@ -19,6 +20,7 @@ class Main extends Component {
       <Container className="main-container">
         <Switch>
           <Route exact path='/' component={requireSignIn(Home)}></Route>
+          <Route exact path='/posts/new' component={requireSignIn(CreatePost)}></Route>
           <Route exact path='/favorites' component={requireSignIn(Favorites)}></Route>
           <Route exact path='/sign-in' component={SignIn}></Route>
           <Route exact path='/sign-up' component={SignUp}></Route>

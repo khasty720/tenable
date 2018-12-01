@@ -156,7 +156,7 @@ class SignUp extends Component {
                     </Row>
                     <Row form className="text-center">
                       <Col>
-                        <Button type="submit" className="btn-info pl-5 pr-5" disabled={isSubmitting}>Sign Up</Button>
+                        <Button type="submit" className="pl-5 pr-5" outline color="primary" disabled={isSubmitting}>Sign Up</Button>
                       </Col>
                     </Row>
                   </Form>

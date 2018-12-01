@@ -1,25 +1,28 @@
 import React, { Component } from 'react';
-import './SignIn.scss';
 import { Col, Row, Button, Form,  FormGroup, FormFeedback, Label, Input, Card, CardBody, Alert } from 'reactstrap';
-import { connect } from 'react-redux';
-import { signInUser } from '../../config/redux-token-auth-config';
 import { withRouter, Link} from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import axios from 'axios';
 
-class SignIn extends Component {
-
+class CreatePost extends Component {
   render() {
     return (
     <div>
       <Formik
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ message: "", imageUrl: "" }}
         onSubmit={(values, actions) => {
-          const email = values.email;
-          const password = values.password;
-          const { signInUser } = this.props;
+          const body = {
+            message: values.message,
+            image_url: values.imageUrl
+          }
 
-          signInUser({ email, password }).then(
+          axios({
+            method: 'post',
+            url: '/posts',
+            data: body
+          })
+          .then(
             success => {
               actions.setSubmitting(false);
               this.props.history.push('/');
@@ -27,16 +30,17 @@ class SignIn extends Component {
             error => {
               actions.setSubmitting(false);
               // actions.setErrors(formatErrors(error));
-              actions.setStatus({ msg: 'Invalid username or password' });
+              // actions.setStatus({ msg: 'Error' });
             }
           );
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string()
-            .email("email format invalid")
-            .required("email is required"),
-          password: Yup.string()
-            .required("password is required"),
+          message: Yup.string()
+            .required("message is required")
+            .max(280),
+          imageUrl: Yup.string()
+            .url("invalid image url")
+            .required("image url is required"),
         })}
       >
       { props => {
@@ -47,6 +51,7 @@ class SignIn extends Component {
           status,
           isSubmitting,
           handleChange,
+          handleBlur,
           handleSubmit,
         } = props;
         return (
@@ -54,7 +59,7 @@ class SignIn extends Component {
             <Col md="6">
               <Card className="card-default">
                 <CardBody>
-                  <h5 className="text-center">Sign In</h5>
+                  <h5 className="text-center">Create Post</h5>
                   <Form onSubmit={handleSubmit}>
                     <Row form>
                       <Col>
@@ -68,17 +73,18 @@ class SignIn extends Component {
                     <Row form>
                       <Col>
                         <FormGroup>
-                          <Label for="email">Email</Label>
+                          <Label for="imageUrl">Image Url</Label>
                           <Input
-                            id="email"
-                            placeholder="Enter your email"
+                            id="imageUrl"
+                            placeholder="https://placeholdit.imgix.net/"
                             type="text"
-                            value={values.email}
+                            value={values.imageUrl}
                             onChange={handleChange}
-                            invalid={errors.email && touched.email }
+                            onBlur={handleBlur}
+                            invalid={errors.imageUrl && touched.imageUrl }
                           />
-                          {errors.email && touched.email && (
-                            <FormFeedback>{errors.email}</FormFeedback>
+                          {errors.imageUrl && touched.imageUrl && (
+                            <FormFeedback>{errors.imageUrl}</FormFeedback>
                           )}
                         </FormGroup>
                       </Col>
@@ -86,24 +92,27 @@ class SignIn extends Component {
                     <Row form>
                       <Col>
                         <FormGroup>
-                          <Label for="password">Password</Label>
+                          <Label for="message">Message</Label>
                           <Input
-                            id="password"
-                            placeholder="password"
-                            type="password"
-                            value={values.password}
+                            id="message"
+                            placeholder="Limit 280 charaters"
+                            type="textarea"
+                            maxlength="280"
+                            rows="4"
+                            value={values.message}
                             onChange={handleChange}
-                            invalid={errors.password && touched.password }
+                            onBlur={handleBlur}
+                            invalid={errors.message && touched.message }
                           />
-                          {errors.password && touched.password && (
-                            <FormFeedback>{errors.password}</FormFeedback>
+                          {errors.message && touched.message && (
+                            <FormFeedback>{errors.message}</FormFeedback>
                           )}
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row form className="text-center">
                       <Col>
-                        <Button type="submit" className="pl-5 pr-5" outline color="primary" disabled={isSubmitting}>Sign In</Button>
+                        <Button type="submit" className="pl-5 pr-5" outline color="primary" disabled={isSubmitting}>Create</Button>
                       </Col>
                     </Row>
                   </Form>
@@ -114,22 +123,8 @@ class SignIn extends Component {
         );
       }}
       </Formik>
-      <Row className="justify-content-center mt-5">
-        <Col md="6">
-          <Card className="card-default">
-            <CardBody className="text-center">
-              <Link exact to="/sign-up">
-                New? Create an account.
-              </Link>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
     </div>
     );
   }
 }
-export default connect(
-  null,
-  { signInUser },
-)(withRouter(SignIn))
+export default withRouter(CreatePost);

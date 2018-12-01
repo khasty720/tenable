@@ -1,6 +1,6 @@
 class Api::V1::PostsController < Api::V1::ApiController
   before_action :set_post, only: [:show, :update, :destroy]
-  before_action :authenticate_api_v1_user!
+  before_action :authenticate_user!
 
   # GET /posts
   def index
@@ -16,7 +16,7 @@ class Api::V1::PostsController < Api::V1::ApiController
 
   # POST /posts
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
 
     if @post.save
       render json: @post, status: :created, location: @post
