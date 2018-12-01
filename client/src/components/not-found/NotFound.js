@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './NotFound.scss';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 class NotFound extends Component {
   render() {

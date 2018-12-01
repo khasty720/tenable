@@ -8,4 +8,6 @@ class User < ActiveRecord::Base
   validates :nickname, :email, uniqueness: true
   validates :nickname, length: { in: 6..20 }
 
+  has_many :posts, dependent: :destroy
+
 end
