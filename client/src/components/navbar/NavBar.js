@@ -57,7 +57,7 @@ class NavBar extends Component {
             <Nav className="ml-auto" navbar>
               { this.props.currentUser.isSignedIn &&
                 <NavLink exact to="/" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
-                  Home
+                  Feed
                 </NavLink>
               }
               { this.props.currentUser.isSignedIn &&

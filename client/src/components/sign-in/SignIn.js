@@ -68,7 +68,7 @@ class SignIn extends Component {
                     <Row form>
                       <Col>
                         <FormGroup>
-                          <Label for="exampleEmail">Email</Label>
+                          <Label for="email">Email</Label>
                           <Input
                             id="email"
                             placeholder="Enter your email"
@@ -86,7 +86,7 @@ class SignIn extends Component {
                     <Row form>
                       <Col>
                         <FormGroup>
-                          <Label for="examplePassword">Password</Label>
+                          <Label for="password">Password</Label>
                           <Input
                             id="password"
                             placeholder="password"
@@ -103,7 +103,7 @@ class SignIn extends Component {
                     </Row>
                     <Row form className="text-center">
                       <Col>
-                        <Button type="submit" className="btn-info pl-5 pr-5" disabled={isSubmitting}>Sign In</Button>
+                        <Button type="submit" className="pl-5 pr-5" outline color="primary" disabled={isSubmitting}>Sign In</Button>
                       </Col>
                     </Row>
                   </Form>
