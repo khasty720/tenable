@@ -67,7 +67,7 @@ class SignUp extends Component {
             <Col md="6">
               <Card className="card-default">
                 <CardBody>
-                  <h5 className="text-center">Sign In</h5>
+                  <h5 className="text-center">Sign Up</h5>
                   <Form onSubmit={handleSubmit}>
                     <Row form>
                       <Col>
@@ -156,7 +156,7 @@ class SignUp extends Component {
                     </Row>
                     <Row form className="text-center">
                       <Col>
-                        <Button type="submit" className="btn-info pl-5 pr-5" disabled={isSubmitting}>Sign In</Button>
+                        <Button type="submit" className="btn-info pl-5 pr-5" disabled={isSubmitting}>Sign Up</Button>
                       </Col>
                     </Row>
                   </Form>

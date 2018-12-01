@@ -3,7 +3,7 @@ import './SignIn.scss';
 import { Col, Row, Button, Form,  FormGroup, FormFeedback, Label, Input, Card, CardBody, Alert } from 'reactstrap';
 import { connect } from 'react-redux';
 import { signInUser } from '../../config/redux-token-auth-config';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link} from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 
@@ -11,6 +11,7 @@ class SignIn extends Component {
 
   render() {
     return (
+    <div>
       <Formik
         initialValues={{ email: "", password: "" }}
         onSubmit={(values, actions) => {
@@ -46,7 +47,6 @@ class SignIn extends Component {
           status,
           isSubmitting,
           handleChange,
-          handleBlur,
           handleSubmit,
         } = props;
         return (
@@ -75,7 +75,6 @@ class SignIn extends Component {
                             type="text"
                             value={values.email}
                             onChange={handleChange}
-                            onBlur={handleBlur}
                             invalid={errors.email && touched.email }
                           />
                           {errors.email && touched.email && (
@@ -94,7 +93,6 @@ class SignIn extends Component {
                             type="password"
                             value={values.password}
                             onChange={handleChange}
-                            onBlur={handleBlur}
                             invalid={errors.password && touched.password }
                           />
                           {errors.password && touched.password && (
@@ -116,6 +114,18 @@ class SignIn extends Component {
         );
       }}
       </Formik>
+      <Row className="justify-content-center mt-5">
+        <Col md="6">
+          <Card className="card-default">
+            <CardBody className="text-center">
+              <Link exact to="/sign-up">
+                New? Create an account.
+              </Link>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </div>
     );
   }
 }
