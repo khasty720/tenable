@@ -12,7 +12,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   # POST /posts
   def create
     @post = current_user.posts.new(post_params)
-    
+
     if @post.save
       render json: @post, status: :created, location: @post
     else

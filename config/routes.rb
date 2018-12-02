@@ -9,6 +9,11 @@ Rails.application.routes.draw do
            post 'remove'
          end
       end
+      resources :likes do
+        collection do
+           post 'remove'
+         end
+      end
       resources :posts
     end
   end

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :posts, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :favorite_posts, through: :favorites, source: :post
+  has_many :likes, dependent: :destroy
 
   validates :nickname, :email, uniqueness: true
   validates :nickname, length: { in: 6..20 }

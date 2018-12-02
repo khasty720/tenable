@@ -1,6 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :user
   has_many :favorites, dependent: :destroy
+  has_many :likes, dependent: :destroy
   has_many :users, through: :favorites
 
   validates :image_url, presence: true
