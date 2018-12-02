@@ -6,13 +6,13 @@ class Api::V1::PostsController < Api::V1::ApiController
   def index
     @posts = Post.all.order(created_at: :desc)
 
-    render json: @posts
+    render json: PostSerializer.new(@posts, {params: {current_user: current_user}}).serializable_hash
   end
 
   # POST /posts
   def create
     @post = current_user.posts.new(post_params)
-
+    
     if @post.save
       render json: @post, status: :created, location: @post
     else

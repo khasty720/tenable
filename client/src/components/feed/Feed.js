@@ -22,10 +22,22 @@ class Feed extends Component {
   getPosts() {
     axios.get('/posts')
       .then(res => {
-          const posts = res.data;
+          const posts = res.data.data;
           this.setState({posts: posts})
       })
   }
+
+  renderPostList = (posts) => (
+    <div>
+      {posts.map((post, id)  =>
+        <Row className="justify-content-center" key={id}>
+          <Col xs="12" md="6">
+            <Post post={post} />
+          </Col>
+        </Row>
+      )}
+    </div>
+  )
 
   render() {
     return (
@@ -43,16 +55,7 @@ class Feed extends Component {
         <h4 className="text-center mb-4">
           Image Feed
         </h4>
-
-        {this.state.posts.map(function(post, id){
-           return (
-             <Row className="justify-content-center" key={id}>
-               <Col xs="12" md="6">
-                 <Post post={post}/>
-               </Col>
-             </Row>
-           )
-         })}
+        {this.renderPostList(this.state.posts)}
       </div>
     );
   }

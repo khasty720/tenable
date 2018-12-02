@@ -1,17 +1,16 @@
 class Api::V1::FavoritesController < Api::V1::ApiController
-  before_action :set_favorite, only: [:destroy]
   before_action :authenticate_user!
 
   # GET /favorites
   def index
-    @favorites = current_user.favorite_posts
+    @favorite_posts = current_user.favorite_posts.order(created_at: :desc)
 
-    render json: @favorites
+    render json: PostSerializer.new(@favorite_posts, {params: {current_user: current_user}}).serializable_hash
   end
 
   # POST /favorites
   def create
-    @favorite = Favorite.new(favorite_params)
+    @favorite = current_user.favorites.new(favorite_params)
 
     if @favorite.save
       render json: @favorite, status: :created, location: @favorite
@@ -20,17 +19,12 @@ class Api::V1::FavoritesController < Api::V1::ApiController
     end
   end
 
-  # DELETE /favorites/1
-  def destroy
+  def remove
+    @favorite = current_user.favorites.find_by_post_id(params[:post_id])
     @favorite.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_favorite
-      @favorite = Favorite.find(params[:id])
-    end
-
     # Only allow a trusted parameter "white list" through.
     def favorite_params
       params.require(:favorite).permit(:user_id, :post_id)
