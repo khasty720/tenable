@@ -12,7 +12,7 @@ class Favorites extends Component {
       posts: []
     }
     this.getFavorites = this.getFavorites.bind(this)
-    this.removeFavorite = this.removeFavorite.bind(this)
+    this.removePost = this.removePost.bind(this)
   }
 
   componentDidMount() {
@@ -27,7 +27,7 @@ class Favorites extends Component {
       })
   }
 
-  removeFavorite(post_id) {
+  removePost(post_id) {
     const filteredPosts = this.state.posts.filter(post => post.id !== post_id);
     this.setState({posts: filteredPosts});
   }
@@ -37,7 +37,7 @@ class Favorites extends Component {
       {posts.map((post, id)  =>
         <Row className="justify-content-center" key={id}>
           <Col xs="12" md="6">
-            <Post post={post} removeFavorite={this.removeFavorite}/>
+            <Post post={post} removePost={this.removePost} removeFavorite={this.removePost} />
           </Col>
         </Row>
       )}

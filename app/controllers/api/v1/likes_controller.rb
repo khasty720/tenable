@@ -1,5 +1,6 @@
 class Api::V1::LikesController < Api::V1::ApiController
   before_action :authenticate_user!
+  load_and_authorize_resource
 
   # POST /likes
   def create

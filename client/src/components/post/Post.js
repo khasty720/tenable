@@ -14,6 +14,7 @@ class Post extends Component {
       likes: this.props.post.attributes.likes,
     }
 
+    this.deletePost = this.deletePost.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.removeFavorite = this.removeFavorite.bind(this);
@@ -29,6 +30,21 @@ class Post extends Component {
     } else {
       this.addFavorite();
     }
+  }
+
+  deletePost(e) {
+    e.preventDefault();
+    axios({
+      method: 'delete',
+      url: '/posts/' + this.props.post.id,
+    })
+    .then(
+      success => {
+        this.props.removePost(this.props.post.id);
+      }
+    ).catch(error => {
+        console.log(error.response);
+    });
   }
 
   addFavorite() {
@@ -145,6 +161,11 @@ class Post extends Component {
                {this.state.favorited ? "Unfavorite" : "Favorite"}
             </Button>
 
+            { this.props.post.attributes.can_delete &&
+              <Button className="ml-2" outline color="danger" size="sm" onClick={this.deletePost}>
+                 Delete
+              </Button>
+            }
           </CardText>
         </CardBody>
       </Card>
@@ -160,6 +181,7 @@ Post.propTypes = {
       image_url: PropTypes.string.isRequired,
       nickname: PropTypes.string.isRequired,
       favorited: PropTypes.bool.isRequired,
+      can_delete: PropTypes.bool.isRequired,
       liked: PropTypes.bool.isRequired,
       likes: PropTypes.number.isRequired,
       created_at: PropTypes.string.isRequired,
