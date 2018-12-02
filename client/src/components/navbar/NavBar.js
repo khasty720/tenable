@@ -52,6 +52,9 @@ class NavBar extends Component {
           <NavbarBrand href="/">
             <FontAwesomeIcon icon={['fab', 'pied-piper']} size="2x" color="white"/>
           </NavbarBrand>
+          <NavbarBrand className="text-white">
+            {this.props.currentUser.attributes.nickname}
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -61,17 +64,17 @@ class NavBar extends Component {
                 </NavLink>
               }
               { this.props.currentUser.isSignedIn &&
-                <NavLink exact to="/favorites" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
+                <NavLink to="/favorites" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
                   Favorites
                 </NavLink>
               }
               { !this.props.currentUser.isSignedIn &&
-                <NavLink exact to="/sign-in" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
+                <NavLink to="/sign-in" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
                   Sign In
                 </NavLink>
               }
               { !this.props.currentUser.isSignedIn &&
-                <NavLink exact to="/sign-up" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
+                <NavLink to="/sign-up" activeClassName="active" tag={RouterNavLink} onClick={this.closeNavbar}>
                   Sign Up
                 </NavLink>
               }
@@ -93,9 +96,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(
-  mapStateToProps,
-  {
-    signOutUser
-  },
-)(withRouter(NavBar))
+export default withRouter(connect(mapStateToProps, {signOutUser})(NavBar) )
