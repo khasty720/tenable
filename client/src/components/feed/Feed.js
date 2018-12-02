@@ -36,8 +36,8 @@ class Feed extends Component {
 
   renderPostList = (posts) => (
     <div>
-      {posts.map((post, id)  =>
-        <Row className="justify-content-center" key={id}>
+      {posts.map(post =>
+        <Row className="justify-content-center" key={post.id}>
           <Col xs="12" md="6">
             <Post post={post} removePost={this.removePost}/>
           </Col>
