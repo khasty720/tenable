@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './Post.scss';
-import { Card, CardBody, CardText, CardImg, Button, Tooltip } from 'reactstrap';
+import { Card, CardBody, CardText, CardImg, Button } from 'reactstrap';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PostBtn from './PostBtn';
+
 
 class Post extends Component {
   constructor(props) {
@@ -13,8 +15,6 @@ class Post extends Component {
       favorited: this.props.post.attributes.favorited,
       liked: this.props.post.attributes.liked,
       likes: this.props.post.attributes.likes,
-      favTooltipOpen: false,
-      likeTooltipOpen: false
     }
 
     this.deletePost = this.deletePost.bind(this);
@@ -24,21 +24,6 @@ class Post extends Component {
     this.toggleLike = this.toggleLike.bind(this);
     this.addLike = this.addLike.bind(this);
     this.removeLike = this.removeLike.bind(this);
-
-    this.toggleFavTooltip = this.toggleFavTooltip.bind(this);
-    this.toggleLikeTooltip = this.toggleLikeTooltip.bind(this);
-  }
-
-  toggleFavTooltip() {
-    this.setState({
-      favTooltipOpen: !this.state.favTooltipOpen
-    });
-  }
-
-  toggleLikeTooltip() {
-    this.setState({
-      likeTooltipOpen: !this.state.likeTooltipOpen
-    });
   }
 
   toggleFavorite(e) {
@@ -170,29 +155,14 @@ class Post extends Component {
             {this.props.post.attributes.message}
           </CardText>
           <CardText className="text-right">
-
-            <Button id={"likeBtn" + this.props.post.id} className={this.state.liked ? "active" : ""} outline color="primary" size="sm" onClick={this.toggleLike}>
-              <span>
-                <FontAwesomeIcon icon='heart'/> {this.state.likes}
-              </span>
-            </Button>
-            <Tooltip placement="top" isOpen={this.state.likeTooltipOpen} target={"likeBtn" + this.props.post.id} toggle={this.toggleLikeTooltip} delay={{ show: 500, hide: 0 }}>
-              {this.state.liked ? "Unlike" : "Like"}
-            </Tooltip>
-
-
-            <Button id={"favoriteBtn" + this.props.post.id} className={this.state.favorited ? "ml-3 active" : "ml-3"} outline color="primary" size="sm" onClick={this.toggleFavorite}>
-               <FontAwesomeIcon icon='star'/>
-            </Button>
-            <Tooltip placement="top" isOpen={this.state.favTooltipOpen} target={"favoriteBtn" + this.props.post.id} toggle={this.toggleFavTooltip} delay={{ show: 500, hide: 0 }}>
-              {this.state.favorited ? "Unfavorite" : "Favorite"}
-            </Tooltip>
+              <PostBtn btnId="likeBtn" icon="heart" active={this.state.liked} activeText="Unlike" inactiveText="Like" count={this.state.likes} toggleAction={this.toggleLike} post={this.props.post} />
+              <PostBtn btnId="favoriteBtn" icon="star" active={this.state.favorited} activeText="Unfavorite" inactiveText="Favorite" toggleAction={this.toggleFavorite} post={this.props.post} />
 
             { this.props.post.attributes.can_delete &&
-              <Button className="ml-3" outline color="danger" size="sm" onClick={this.deletePost}>
-                 <FontAwesomeIcon icon='trash-alt'/>
-              </Button>
-            }
+                <Button className="ml-3" outline color="danger" size="sm" onClick={this.deletePost}>
+                   <FontAwesomeIcon icon='trash-alt'/>
+                </Button>
+              }
           </CardText>
         </CardBody>
       </Card>
