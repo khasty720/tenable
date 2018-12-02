@@ -55,6 +55,9 @@ class Post extends Component {
     })
     .then(
       success => {
+        this.setState(
+          {favorited: false}
+        )
         this.props.removeFavorite(this.props.post.id);
       }
     ).catch(error => {
