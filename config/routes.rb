@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     scope module: :v1, path: '/v1' do
       mount_devise_token_auth_for 'User', at: 'auth'
 
+      resources :favorites
       resources :posts
     end
   end

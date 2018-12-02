@@ -5,9 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :posts, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :favorite_posts, through: :favorites, source: :post
+
   validates :nickname, :email, uniqueness: true
   validates :nickname, length: { in: 6..20 }
-
-  has_many :posts, dependent: :destroy
 
 end

@@ -52,6 +52,9 @@ class NavBar extends Component {
           <NavbarBrand href="/">
             <FontAwesomeIcon icon={['fab', 'pied-piper']} size="2x" color="white"/>
           </NavbarBrand>
+          <NavbarBrand className="text-white">
+            {this.props.currentUser.attributes.nickname}
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
