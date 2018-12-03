@@ -26,8 +26,7 @@ class Post extends Component {
     this.removeLike = this.removeLike.bind(this);
   }
 
-  toggleFavorite(e) {
-    e.preventDefault();
+  toggleFavorite() {
     if (this.state.favorited) {
       this.removeFavorite();
     } else {
@@ -89,8 +88,7 @@ class Post extends Component {
     });
   }
 
-  toggleLike(e) {
-    e.preventDefault();
+  toggleLike() {
     if (this.state.liked) {
       this.removeLike();
     } else {

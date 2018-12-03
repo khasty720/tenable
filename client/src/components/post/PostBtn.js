@@ -11,6 +11,7 @@ class PostBtn extends Component {
     }
 
     this.toggleTooltip = this.toggleTooltip.bind(this);
+    this.toggleAction = this.toggleAction.bind(this);
   }
 
   toggleTooltip() {
@@ -19,11 +20,16 @@ class PostBtn extends Component {
     });
   }
 
+  toggleAction() {
+    this.toggleTooltip();
+    this.props.toggleAction();
+  }
+
 
   render() {
     return (
       <span>
-        <Button id={this.props.btnId + this.props.post.id} className={this.props.active ? "ml-3 active" : "ml-3"} outline color="primary" size="sm" onClick={this.props.toggleAction}>
+        <Button id={this.props.btnId + this.props.post.id} className={this.props.active ? "ml-3 active" : "ml-3"} outline color="primary" size="sm" onClick={this.toggleAction}>
            <span>
              <FontAwesomeIcon icon={this.props.icon}/> {this.props.count}
            </span>
