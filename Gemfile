@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 gem 'devise_token_auth'
+gem 'cancancan'
 
 gem 'fast_jsonapi'
 

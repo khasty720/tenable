@@ -6,6 +6,18 @@ class PostSerializer
     Favorite.where(user_id: params[:current_user].id, post_id: post.id).exists? ? true : false
   end
 
+  attribute :liked do |post, params|
+    Like.where(user_id: params[:current_user].id, post_id: post.id).exists? ? true : false
+  end
+
+  attribute :can_delete do |post, params|
+    (post.user_id == params[:current_user].id) ? true : false
+  end
+
+  attribute :likes do |post|
+    post.likes.count
+  end
+
   attribute :nickname do |post|
     post.user.nickname
   end

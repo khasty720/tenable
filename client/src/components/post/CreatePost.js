@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Col, Row, Button, Form,  FormGroup, FormFeedback, Label, Input, Card, CardBody, Alert } from 'reactstrap';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import * as Yup from "yup";
 import axios from 'axios';
@@ -60,7 +60,11 @@ class CreatePost extends Component {
             <Col md="6">
               <Card className="card-default">
                 <CardBody>
-                  <h5 className="text-center">Create Post</h5>
+                  <h5 className="text-center">Create Post
+                    <Link to="/">
+                      <Button className="float-right" close />
+                    </Link>
+                  </h5>
                   <Form onSubmit={handleSubmit}>
                     <Row form>
                       <Col>

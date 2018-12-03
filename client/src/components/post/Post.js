@@ -4,26 +4,48 @@ import axios from 'axios';
 import './Post.scss';
 import { Card, CardBody, CardText, CardImg, Button } from 'reactstrap';
 import Moment from 'react-moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PostBtn from './PostBtn';
+
 
 class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
       favorited: this.props.post.attributes.favorited,
+      liked: this.props.post.attributes.liked,
+      likes: this.props.post.attributes.likes,
     }
 
+    this.deletePost = this.deletePost.bind(this);
     this.toggleFavorite = this.toggleFavorite.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.removeFavorite = this.removeFavorite.bind(this);
+    this.toggleLike = this.toggleLike.bind(this);
+    this.addLike = this.addLike.bind(this);
+    this.removeLike = this.removeLike.bind(this);
   }
 
-  toggleFavorite(e) {
-    e.preventDefault();
+  toggleFavorite() {
     if (this.state.favorited) {
       this.removeFavorite();
     } else {
       this.addFavorite();
     }
+  }
+
+  deletePost(e) {
+    axios({
+      method: 'delete',
+      url: '/posts/' + this.props.post.id,
+    })
+    .then(
+      success => {
+        this.props.removePost(this.props.post.id);
+      }
+    ).catch(error => {
+        console.log(error.response);
+    });
   }
 
   addFavorite() {
@@ -55,7 +77,61 @@ class Post extends Component {
     })
     .then(
       success => {
+        this.setState(
+          {favorited: false}
+        )
         this.props.removeFavorite(this.props.post.id);
+      }
+    ).catch(error => {
+        console.log(error.response);
+    });
+  }
+
+  toggleLike() {
+    if (this.state.liked) {
+      this.removeLike();
+    } else {
+      this.addLike();
+    }
+  }
+
+  addLike() {
+    axios({
+      method: 'post',
+      url: '/likes',
+      data: {
+        post_id: this.props.post.id
+      }
+    })
+    .then(
+      success => {
+        const likes = this.state.likes + 1;
+        this.setState({
+            liked: true,
+            likes: likes
+        })
+      }
+    ).catch(error => {
+        console.log(error.response);
+    });
+  }
+
+  removeLike() {
+
+    axios({
+      method: 'post',
+      url: '/likes/remove',
+      data: {
+        post_id: this.props.post.id
+      }
+    })
+    .then(
+      success => {
+        const likes = this.state.likes - 1;
+        this.setState({
+            liked: false,
+            likes: likes
+        })
       }
     ).catch(error => {
         console.log(error.response);
@@ -76,12 +152,17 @@ class Post extends Component {
             {this.props.post.attributes.message}
           </CardText>
           <CardText className="text-right">
-            <Button className={this.state.favorited ? "active" : ""} outline color="primary" size="sm" onClick={this.toggleFavorite}>
-              Favorite
-            </Button>
-            <Button className="ml-2" outline color="primary" size="sm">
-              Like
-            </Button>
+              <PostBtn btnId="likeBtn" icon="heart" active={this.state.liked} activeText="Unlike" inactiveText="Like" count={this.state.likes} toggleAction={this.toggleLike} post={this.props.post} />
+              <PostBtn btnId="favoriteBtn" icon="star" active={this.state.favorited} activeText="Unfavorite" inactiveText="Favorite" toggleAction={this.toggleFavorite} post={this.props.post} />
+
+              { this.props.post.attributes.can_delete &&
+                <Button className="post-del-btn " outline color="danger" size="sm" onClick={e =>
+                      window.confirm("Are you sure you want to delete this post?") &&
+                      this.deletePost(e)
+                  }>
+                   <FontAwesomeIcon icon='trash-alt'/>
+                </Button>
+              }
           </CardText>
         </CardBody>
       </Card>
@@ -97,6 +178,9 @@ Post.propTypes = {
       image_url: PropTypes.string.isRequired,
       nickname: PropTypes.string.isRequired,
       favorited: PropTypes.bool.isRequired,
+      can_delete: PropTypes.bool.isRequired,
+      liked: PropTypes.bool.isRequired,
+      likes: PropTypes.number.isRequired,
       created_at: PropTypes.string.isRequired,
       updated_at: PropTypes.string,
     })
