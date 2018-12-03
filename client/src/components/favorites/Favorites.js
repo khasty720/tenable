@@ -11,7 +11,8 @@ class Favorites extends Component {
   constructor () {
     super()
     this.state = {
-      posts: []
+      posts: [],
+      showNoResults: false
     }
     this.getFavorites = this.getFavorites.bind(this)
     this.removePost = this.removePost.bind(this)
@@ -19,6 +20,14 @@ class Favorites extends Component {
 
   componentDidMount() {
     this.getFavorites();
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.posts !== this.state.posts) {
+      if (!this.state.posts.length) {
+        this.setState({showNoResults: true})
+      }
+    }
   }
 
   getFavorites() {
@@ -52,7 +61,10 @@ class Favorites extends Component {
         <h4 className="text-center mb-4">
           Favorites
         </h4>
-        { this.state.posts.length ? this.renderPostList(this.state.posts) : <NoResults message="No favorited posts found."/>}
+        { this.renderPostList(this.state.posts) }
+        { this.state.showNoResults &&
+           <NoResults message="No posts found."/>
+        }
       </div>
     );
   }

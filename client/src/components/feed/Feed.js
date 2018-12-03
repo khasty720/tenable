@@ -11,7 +11,8 @@ class Feed extends Component {
   constructor () {
     super()
     this.state = {
-      posts: []
+      posts: [],
+      showNoResults: false
     }
     this.getPosts = this.getPosts.bind(this)
     this.removePost = this.removePost.bind(this)
@@ -19,6 +20,14 @@ class Feed extends Component {
 
   componentDidMount() {
     this.getPosts();
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.posts !== this.state.posts) {
+      if (!this.state.posts.length) {
+        this.setState({showNoResults: true})
+      }
+    }
   }
 
   getPosts() {
@@ -61,7 +70,10 @@ class Feed extends Component {
         <h4 className="text-center mb-4">
           Image Feed
         </h4>
-        { this.state.posts.length ? this.renderPostList(this.state.posts) : <NoResults message="No posts found."/>}
+        { this.renderPostList(this.state.posts) }
+        { this.state.showNoResults &&
+           <NoResults message="No posts found."/>
+        }
       </div>
     );
   }
