@@ -3,7 +3,9 @@ import './Favorites.scss';
 import axios from 'axios';
 import { Row, Col, Button } from 'reactstrap';
 import Post from '../post/Post';
+import NoResults from '../feed/NoResults';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 class Favorites extends Component {
   constructor () {
@@ -50,7 +52,7 @@ class Favorites extends Component {
         <h4 className="text-center mb-4">
           Favorites
         </h4>
-        {this.renderPostList(this.state.posts)}
+        { this.state.posts.length ? this.renderPostList(this.state.posts) : <NoResults message="No favorited posts found."/>}
       </div>
     );
   }

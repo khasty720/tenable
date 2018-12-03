@@ -158,7 +158,7 @@ class Post extends Component {
               <PostBtn btnId="likeBtn" icon="heart" active={this.state.liked} activeText="Unlike" inactiveText="Like" count={this.state.likes} toggleAction={this.toggleLike} post={this.props.post} />
               <PostBtn btnId="favoriteBtn" icon="star" active={this.state.favorited} activeText="Unfavorite" inactiveText="Favorite" toggleAction={this.toggleFavorite} post={this.props.post} />
 
-            { this.props.post.attributes.can_delete &&
+              { this.props.post.attributes.can_delete &&
                 <Button className="ml-3" outline color="danger" size="sm" onClick={this.deletePost}>
                    <FontAwesomeIcon icon='trash-alt'/>
                 </Button>
