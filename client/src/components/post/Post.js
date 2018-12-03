@@ -35,7 +35,6 @@ class Post extends Component {
   }
 
   deletePost(e) {
-    e.preventDefault();
     axios({
       method: 'delete',
       url: '/posts/' + this.props.post.id,
@@ -157,7 +156,10 @@ class Post extends Component {
               <PostBtn btnId="favoriteBtn" icon="star" active={this.state.favorited} activeText="Unfavorite" inactiveText="Favorite" toggleAction={this.toggleFavorite} post={this.props.post} />
 
               { this.props.post.attributes.can_delete &&
-                <Button className="ml-3" outline color="danger" size="sm" onClick={this.deletePost}>
+                <Button className="post-del-btn " outline color="danger" size="sm" onClick={e =>
+                      window.confirm("Are you sure you want to delete this post?") &&
+                      this.deletePost(e)
+                  }>
                    <FontAwesomeIcon icon='trash-alt'/>
                 </Button>
               }

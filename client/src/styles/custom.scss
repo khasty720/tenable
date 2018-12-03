@@ -25,3 +25,23 @@
     padding: 0;
     cursor: pointer;
 }
+
+.post-btn {
+  @extend .btn-outline-primary;
+  margin-left: 1rem;
+
+  &:active, &:hover {
+    color: #007bff;
+    background-color: inherit;
+  }
+}
+
+.post-del-btn {
+  @extend .btn-outline-primary;
+  margin-left: 1rem;
+
+  &:active, &:hover {
+    color: #dc3545;
+    background-color: inherit;
+  }
+}

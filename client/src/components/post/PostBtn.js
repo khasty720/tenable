@@ -21,7 +21,6 @@ class PostBtn extends Component {
   }
 
   toggleAction() {
-    this.toggleTooltip();
     this.props.toggleAction();
   }
 
@@ -29,7 +28,7 @@ class PostBtn extends Component {
   render() {
     return (
       <span>
-        <Button id={this.props.btnId + this.props.post.id} className={this.props.active ? "ml-3 active" : "ml-3"} outline color="primary" size="sm" onClick={this.toggleAction}>
+        <Button id={this.props.btnId + this.props.post.id} className={this.props.active ? "post-btn active" : "post-btn"} outline color="primary" size="sm" onClick={this.toggleAction}>
            <span>
              <FontAwesomeIcon icon={this.props.icon}/> {this.props.count}
            </span>
